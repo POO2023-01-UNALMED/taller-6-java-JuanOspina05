@@ -1,32 +1,36 @@
 package vehiculos;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Pais {
     private String nombre;
-    static Map<Pais, Integer> ventasPorPais = new HashMap<>();
-
-    public Pais(String nombre) {
+    private static ArrayList<Pais> paises = new ArrayList();
+    private int cantidadVehiculos;
+    
+    public Pais(String nombre){
         this.nombre = nombre;
+        paises.add(this);   
     }
-
-    public String getNombre() {
+    public String getNombre(){
         return nombre;
     }
-
-    public static Pais paisMasVendedor() {
-        int valorMax = -1;
-        Pais paisMasVendedor = null;
-
-        for (Map.Entry<Pais, Integer> entry : ventasPorPais.entrySet()) {
-            final int valorActual = entry.getValue();
-
-            if (valorActual > valorMax) {
-                valorMax = valorActual;
-                paisMasVendedor = entry.getKey();
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+    public void setCantidadVehiculos(){
+        ++cantidadVehiculos;
+    }
+    public static Pais paisMasVendedor(){
+        Pais max;
+        if(!paises.isEmpty()){
+            max = paises.get(0);
+            for(Pais i : paises){
+                if (i.cantidadVehiculos > max.cantidadVehiculos){
+                    max = i;
+                }
             }
+            return max;
         }
-        return paisMasVendedor;
+        return null;
     }
 }
